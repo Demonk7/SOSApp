@@ -1,5 +1,6 @@
 package com.example.sosapp
 
+import Emergency
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SOSAppTheme {
+                Emergency()
             }
         }
     }
