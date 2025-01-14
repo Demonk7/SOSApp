@@ -20,47 +20,62 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.sosapp.FindingHelpScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Emergency() {
     var showDialog by remember { mutableStateOf(false) }
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color(0xFFEAF6FF) // Light background color
-    ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Panic App", color = Color.White, fontWeight = FontWeight.Bold)
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFF0000000)), // Matching Emergency screen button color
+                modifier = Modifier.padding(0.dp) // Ensuring no padding around the AppBar
+            )
+        }
+    ) { paddingValues -> // Use paddingValues for the main content
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            color = Color(0xFFEAF6FF) // Light background color
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
             ) {
-                Text(
-                    text = "Press for Help!",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF333333) // Darker text
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(
-                    onClick = { showDialog = true },
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFbd3000) // Blue button
-                    ),
-                    modifier = Modifier.size(150.dp)
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "EMERGENCY",
-                        fontSize = 16.sp,
+                        text = "Press for Help!",
+                        fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = Color(0xFF333333) // Darker text
                     )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(
+                        onClick = { showDialog = true },
+                        shape = CircleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFbd3000) // Blue button
+                        ),
+                        modifier = Modifier.size(150.dp)
+                    ) {
+                        Text(
+                            text = "EMERGENCY",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
                 }
-            }
 
-            if (showDialog) {
-                EmergencyDialog(onDismiss = { showDialog = false })
+                if (showDialog) {
+                    EmergencyDialog(onDismiss = { showDialog = false })
+                }
             }
         }
     }

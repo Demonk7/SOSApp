@@ -22,9 +22,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
-
 @Composable
-fun MainNavigation() {
+fun Nav() {
     val navController = rememberNavController()
 
     NavHost(
@@ -56,25 +55,29 @@ fun FindHelpScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Find Help", color = Color.White) },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Black)
+                title = {
+                    Text("Panic App", color = Color.White, fontWeight = FontWeight.Bold)
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Black),
+                modifier = Modifier.padding(0.dp)
             )
         }
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFF5F5F5))
+                .background(Color.Black)
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
+            // Modern "Find Help" Button
             Button(
                 onClick = { /* TODO: Add action for 'Find Help' */ },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-                shape = RoundedCornerShape(8.dp)
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFbd3000)),
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Text(
                     text = "Find Help",
@@ -86,6 +89,7 @@ fun FindHelpScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // LazyColumn to display the list of help
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -94,7 +98,6 @@ fun FindHelpScreen(navController: NavHostController) {
                     HelpItemCard(
                         helpText = helpList[index],
                         onClick = {
-                            // Navigate to the details screen
                             navController.navigate("detailsScreen/${helpList[index]}")
                         }
                     )
@@ -109,14 +112,14 @@ fun HelpItemCard(helpText: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.LightGray, RoundedCornerShape(8.dp))
+            .background(Color(0xFF3C3C3C), RoundedCornerShape(16.dp))
             .clickable { onClick() }
             .padding(16.dp)
     ) {
         Text(
             text = helpText,
             fontSize = 16.sp,
-            color = Color.Black,
+            color = Color.White,
             fontWeight = FontWeight.Medium
         )
     }
@@ -136,7 +139,7 @@ fun DetailsScreen(helpText: String) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(Color.Black)
                 .padding(paddingValues),
             contentAlignment = Alignment.Center
         ) {
@@ -144,52 +147,8 @@ fun DetailsScreen(helpText: String) {
                 text = helpText,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = Color.White
             )
         }
     }
 }
-
-
-/*import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-
-@Composable
-fun FindHelp(){
-    Column (modifier = Modifier
-        .fillMaxSize()
-        .background(Color.LightGray)
-        .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally){
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-                ) {
-                Text(text = "Find Help",
-                    color = Color.White,
-                    fontSize = 18.sp)
-            }
-        Spacer(modifier = Modifier.height(16.dp))
-        Row {
-             LazyColumn (){  }
-        }
-    }
-}*/

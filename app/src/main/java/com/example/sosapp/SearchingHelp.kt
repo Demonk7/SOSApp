@@ -13,12 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 
 @Composable
-fun FindingHelpScreen() {//onSearchComplete: (List<User>) -> Unit
+fun FindingHelpScreen(navController:NavHostController) {//onSearchComplete: (List<User>) -> Unit
     val isSearching = remember { mutableStateOf(true) }
-
+    val helpItems=remember {mutableStateOf<List<HelpItem>>(emptyList())}
     // Simulate the search process
     LaunchedEffect(Unit) {
         delay(3000) // Simulate a 3-second loading delay
@@ -26,15 +27,18 @@ fun FindingHelpScreen() {//onSearchComplete: (List<User>) -> Unit
         isSearching.value = false
         //onSearchComplete(usersNearby)
         if (usersNearby.isNotEmpty()) {
-            println("Nearby users found:")
-            usersNearby.forEach { user ->
-                println("Name: ${user.name}, Location: (${user.location.latitude}, ${user.location.longitude})")
-            }
-        } else {
+            helpItems.value=usersNearby.mapIndexed({index,user->
+                HelpItem(
+                    id=index+1,
+                    phoneNumber = "123-456-789",
+                    location="${user.location.latitude}, ${user.location.longitude}"
+            })
+            navController.navigate("helpListScreen")
+        }
+        else {
             println("No helpers found nearby.")
         }
     }
-
     if (isSearching.value) {
         Column(
             modifier = Modifier
