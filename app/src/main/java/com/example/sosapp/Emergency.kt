@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.example.sosapp.FindingHelpScreen
 
 @Composable
 fun Emergency() {
@@ -104,17 +105,23 @@ fun EmergencyDialog(onDismiss: () -> Unit) {
                             tint = Color(0xFFB71C1C) // Red color
                         )
                     }
-                    IconButton(
-                        onClick = { /* Handle confirmation logic */ },
-                        modifier = Modifier
-                            .size(48.dp)
-                            .background(Color(0xFFC8E6C9), shape = CircleShape)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = "Confirm",
-                            tint = Color(0xFF1B5E20) // Green color
-                        )
+                    var showFindingHelpScreen by remember { mutableStateOf(false) }
+
+                    if (showFindingHelpScreen) {
+                        FindingHelpScreen()
+                    } else {
+                        IconButton(
+                            onClick = { showFindingHelpScreen = true },
+                            modifier = Modifier
+                                .size(48.dp)
+                                .background(Color(0xFFC8E6C9), shape = CircleShape)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = "Confirm",
+                                tint = Color(0xFF1B5E20) // Green color
+                            )
+                        }
                     }
                 }
             }
