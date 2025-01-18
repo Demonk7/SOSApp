@@ -1,4 +1,4 @@
-package com.example.sosapp.pages
+package com.example.sosapp
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
