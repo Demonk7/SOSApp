@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SOSAppTheme {
-                FindingHelpScreen()
+                MainNavigation(context = this)
             }
         }
     }

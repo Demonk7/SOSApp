@@ -8,6 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -22,23 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
-@Composable
-fun Nav() {
-    val navController = rememberNavController()
 
-    NavHost(
-        navController = navController,
-        startDestination = "findHelpScreen"
-    ) {
-        composable("findHelpScreen") {
-            FindHelpScreen(navController)
-        }
-        composable("detailsScreen/{helpText}") { backStackEntry ->
-            val helpText = backStackEntry.arguments?.getString("helpText") ?: "No Details"
-            DetailsScreen(helpText = helpText)
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,7 +58,7 @@ fun FindHelpScreen(navController: NavHostController) {
         ) {
             // Modern "Find Help" Button
             Button(
-                onClick = { /* TODO: Add action for 'Find Help' */ },
+                onClick = { navController.navigate(Screen.Emergency.route) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
@@ -127,11 +113,16 @@ fun HelpItemCard(helpText: String, onClick: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsScreen(helpText: String) {
+fun DetailsScreen(helpText: String,navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Details", color = Color.White) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                },
                 colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Black)
             )
         }

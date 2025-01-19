@@ -26,19 +26,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 
 class NoHelpFound : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NoHelpFoundScreen()
+            NoHelpFoundScreen(navController = NavHostController(this))
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoHelpFoundScreen() {
+fun NoHelpFoundScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -118,14 +119,14 @@ fun NoHelpFoundScreen() {
                         backgroundColor = Color(0xFFbd3000),  // Matching button color from Emergency screen
                         textColor = Color.White,
                         icon = Icons.Filled.Refresh,  // Refresh icon for Try Again
-                        onClick = { /* Handle Try Again logic */ }
+                        onClick = { navController.navigate(Screen.FindingHelp.route) }
                     )
                     ModernButton(
                         text = "Go Back",
                         backgroundColor = Color(0xFF8C8C8C),  // Matching Go Back button color (gray)
                         textColor = Color.White,
                         icon = Icons.Filled.ArrowBack,  // ArrowBack icon for Go Back
-                        onClick = { /* Handle Go Back logic */ }
+                        onClick = { navController.navigate(Screen.Emergency.route) }
                     )
                 }
             }

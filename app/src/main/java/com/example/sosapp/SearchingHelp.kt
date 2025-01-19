@@ -23,22 +23,23 @@ fun FindingHelpScreen(navController:NavHostController) {//onSearchComplete: (Lis
     // Simulate the search process
     LaunchedEffect(Unit) {
         delay(3000) // Simulate a 3-second loading delay
-        val usersNearby = findUsersNearby(currentLocation = getCurrentLocation(), radiusInKm = 10.0)
+        val usersNearby = findUsersNearby(currentLocation = getCurrentLocation(), radiusInKm = 10.0)//emptyList<User>()
         isSearching.value = false
         //onSearchComplete(usersNearby)
         if (usersNearby.isNotEmpty()) {
-            helpItems.value=usersNearby.mapIndexed({index,user->
+            helpItems.value=usersNearby.mapIndexed { index,user->
                 HelpItem(
                     id=index+1,
                     phoneNumber = "123-456-789",
-                    location="${user.location.latitude}, ${user.location.longitude}"
-            })
-            navController.navigate("helpListScreen")
+                    location="${user.location.latitude}, ${user.location.longitude}")
+            }
+            navController.navigate(Screen.HelpList.route)
         }
         else {
-            println("No helpers found nearby.")
+            navController.navigate(Screen.NoHelpFound.route)
         }
     }
+
     if (isSearching.value) {
         Column(
             modifier = Modifier
@@ -54,6 +55,7 @@ fun FindingHelpScreen(navController:NavHostController) {//onSearchComplete: (Lis
     }
 }
 
+
 // Mock location object
 fun getCurrentLocation(): Location {
     val location = Location("mock")
@@ -68,6 +70,7 @@ data class User(val name: String, val location: Location)
 // Function to find users nearby
 fun findUsersNearby(currentLocation: Location, radiusInKm: Double): List<User> {
     // Mock data: List of registered users with their locations
+    //return emptyList()
     val registeredUsers = listOf(
         User("Alice", Location("mock").apply {
             latitude = 37.7749

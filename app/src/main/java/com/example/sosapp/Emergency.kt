@@ -18,11 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.navigation.NavHostController
 import com.example.sosapp.FindingHelpScreen
+import com.example.sosapp.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Emergency() {
+fun Emergency(navController: NavHostController) {
     var showDialog by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -35,7 +37,7 @@ fun Emergency() {
                 modifier = Modifier.padding(0.dp) // Ensuring no padding around the AppBar
             )
         }
-    ) { paddingValues -> // Use paddingValues for the main content
+    ) { paddingValues ->
         Surface(
             modifier = Modifier
                 .fillMaxSize()
@@ -74,7 +76,11 @@ fun Emergency() {
                 }
 
                 if (showDialog) {
-                    EmergencyDialog(onDismiss = { showDialog = false })
+                    EmergencyDialog(
+                        onDismiss = { showDialog = false },
+                        onConfirm = {
+                            showDialog = false
+                            navController.navigate(Screen.FindingHelp.route) })
                 }
             }
         }
@@ -82,7 +88,7 @@ fun Emergency() {
 }
 
 @Composable
-fun EmergencyDialog(onDismiss: () -> Unit) {
+fun EmergencyDialog(onDismiss: () -> Unit,onConfirm: () -> Unit) {
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = false)
@@ -120,23 +126,17 @@ fun EmergencyDialog(onDismiss: () -> Unit) {
                             tint = Color(0xFFB71C1C) // Red color
                         )
                     }
-                    var showFindingHelpScreen by remember { mutableStateOf(false) }
-
-                    if (showFindingHelpScreen) {
-                        FindingHelpScreen()
-                    } else {
-                        IconButton(
-                            onClick = { showFindingHelpScreen = true },
-                            modifier = Modifier
-                                .size(48.dp)
-                                .background(Color(0xFFC8E6C9), shape = CircleShape)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = "Confirm",
-                                tint = Color(0xFF1B5E20) // Green color
-                            )
-                        }
+                    IconButton(
+                        onClick = onConfirm,
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(Color(0xFFC8E6C9), shape = CircleShape)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = "Confirm",
+                            tint = Color(0xFF1B5E20) // Green color
+                        )
                     }
                 }
             }
