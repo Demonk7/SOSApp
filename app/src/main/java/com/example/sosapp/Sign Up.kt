@@ -1,4 +1,4 @@
-package com.example.sosapp.pages
+package com.example.sosapp
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LoginPage(modifier: Modifier = Modifier) {
+fun SignUpPage(modifier: Modifier = Modifier) {
 
     var email by remember {
         mutableStateOf("")
@@ -30,12 +30,12 @@ fun LoginPage(modifier: Modifier = Modifier) {
         mutableStateOf("")
     }
 
-    Column (
+    Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Login Page" , fontSize = 32.sp)
+        Text(text = "SignUp Page", fontSize = 32.sp)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -65,7 +65,7 @@ fun LoginPage(modifier: Modifier = Modifier) {
         Button(onClick = {
 
         }) {
-            Text(text= "Login")
+            Text(text = "SignUp")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -74,10 +74,8 @@ fun LoginPage(modifier: Modifier = Modifier) {
 
 
         }) {
-            Text(text = "Don't have an account,Sign up")
+            Text(text = "Already have an account,Login")
         }
 
     }
-
 }
-
