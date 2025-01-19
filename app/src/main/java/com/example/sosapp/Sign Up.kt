@@ -30,12 +30,12 @@ fun SignUpPage(modifier: Modifier = Modifier) {
         mutableStateOf("")
     }
 
-    Column (
+    Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "SignUp Page" , fontSize = 32.sp)
+        Text(text = "SignUp Page", fontSize = 32.sp)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -65,18 +65,17 @@ fun SignUpPage(modifier: Modifier = Modifier) {
         Button(onClick = {
 
         }) {
-            Text(text= "SignUp")
+            Text(text = "SignUp")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
         TextButton(onClick = {
-            
+
 
         }) {
             Text(text = "Already have an account,Login")
         }
 
     }
-
 }
