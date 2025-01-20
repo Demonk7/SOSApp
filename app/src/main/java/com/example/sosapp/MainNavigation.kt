@@ -36,6 +36,7 @@ sealed class Screen(val route: String) {
     object Details : Screen("details/{helpText}")
     object Login : Screen("login")
     object Signup: Screen("signup")
+    object Homepage: Screen("homepage")
     {
         fun createRoute(helpText: String) = "details/$helpText"
     }
@@ -49,6 +50,9 @@ fun MainNavigation(context: Context) {
         navController = navController,
         startDestination = "login"
     ) {
+        composable(Screen.Homepage.route) {
+            Homepage(navController, view = viewModel())
+        }
 
         composable(Screen.Login.route) {
             LoginPage(navController)        //1st Page
