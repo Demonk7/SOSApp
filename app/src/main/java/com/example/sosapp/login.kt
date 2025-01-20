@@ -18,10 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun LoginPage(modifier: Modifier = Modifier) {
+fun LoginPage(navController: NavController) {
 
+    var view = viewModel()
     var email by remember {
         mutableStateOf("")
     }
@@ -31,7 +33,7 @@ fun LoginPage(modifier: Modifier = Modifier) {
     }
 
     Column (
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -62,7 +64,7 @@ fun LoginPage(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = {
+        Button(onClick = {view.login(email,password)
 
         }) {
             Text(text= "Login")
@@ -70,9 +72,7 @@ fun LoginPage(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextButton(onClick = {
-
-
+        TextButton(onClick = {navController.navigate(Screen.Signup.route)
         }) {
             Text(text = "Don't have an account,Sign up")
         }

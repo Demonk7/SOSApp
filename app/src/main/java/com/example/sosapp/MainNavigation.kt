@@ -33,7 +33,10 @@ sealed class Screen(val route: String) {
     object FindingHelp:Screen("findingHelp")
     object HelpList : Screen("helpList")
     object NoHelpFound : Screen("noHelpFound")
-    object Details : Screen("details/{helpText}") {
+    object Details : Screen("details/{helpText}")
+    object Login : Screen("login")
+    object Signup: Screen("signup")
+    {
         fun createRoute(helpText: String) = "details/$helpText"
     }
 }
@@ -44,19 +47,27 @@ fun MainNavigation(context: Context) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.FindHelp.route
+        startDestination = "login"
     ) {
+
+        composable(Screen.Login.route) {
+            LoginPage(navController)        //1st Page
+        }
+        composable(Screen.Signup.route) {
+            SignUpPage(navController)           //2nd Page
+        }
         composable(Screen.FindHelp.route) {
-            FindHelpScreen(navController)       //1st page
+            FindHelpScreen(navController)       //3rd page
         }
 
         composable(Screen.Emergency.route) {
-            Emergency(navController)            //2nd Page
+            Emergency(navController)            //4th Page
         }
 
         composable(Screen.FindingHelp.route) {
-            FindingHelpScreen(navController)    //3rd Page
+            FindingHelpScreen(navController)    //5th Page
         }
+
 
         composable(Screen.HelpList.route) {
             // Create mock help items for demonstration
@@ -66,11 +77,11 @@ fun MainNavigation(context: Context) {
                 HelpItem(3, "345-678-9012", "Berkeley, CA")
             )
             HelpListScreen(items = helpItems, context = context, navController = navController)
-        }
+        }       //6th Page
 
         composable(Screen.NoHelpFound.route) {
             NoHelpFoundScreen(navController)
-        }
+        }       //6th page
 
         composable(Screen.Details.route) { backStackEntry ->
             val helpText = backStackEntry.arguments?.getString("helpText") ?: "No Details"
