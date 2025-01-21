@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SOSAppTheme {
-            MainNavigation(context = this)//MainNavigation(context = this)
+            MainNavigation(context = this)
             }
         }
     }

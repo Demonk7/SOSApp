@@ -17,6 +17,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 
+private val RedBlackColorScheme = darkColorScheme(
+    primary = Color.White,
+    onPrimary = Color.Black,
+    surface = Color.Black,
+    onSurface = Color.White,
+    secondary = Color(0xFFbd3000),
+    onSecondary = Color.Black,
+)
 data class HelpItem(
     val id: Int,
     val phoneNumber: String,
@@ -26,32 +34,30 @@ data class HelpItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HelpListScreen(items: List<HelpItem>,context:Context, navController: NavHostController) {
-    val helpItems=remember{mutableStateOf<List<HelpItem>>(emptyList())}
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(
-                    text = "Help Directory",
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
-                    ),
-                    modifier = Modifier.padding(bottom = 16.dp)
-                ) },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF9C27B0))
-            )
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp)
-        ) {
-            Spacer(modifier = Modifier.height(8.dp))
-            items.forEach { item ->
-                HelpCard(item = item, context = context)
-                Spacer(modifier = Modifier.height(16.dp))
+    val helpItems = remember { mutableStateOf<List<HelpItem>>(emptyList()) }
+    MaterialTheme(colorScheme = RedBlackColorScheme) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text("Panic App", color = Color.White, fontWeight = FontWeight.Bold)
+                    },
+                    colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Black),
+                    modifier = Modifier.padding(0.dp)
+                )
+            }
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(16.dp)
+            ) {
+                Spacer(modifier = Modifier.height(8.dp))
+                items.forEach { item ->
+                    HelpCard(item = item, context = context)
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
         }
     }
